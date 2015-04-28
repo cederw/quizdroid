@@ -19,6 +19,10 @@ public class question extends ActionBarActivity {
         setContentView(R.layout.activity_math_q1);
         final Intent intent = getIntent();
         final Intent next3 = new Intent(this, answer.class);
+        if(intent.getIntExtra("total",0)==3){
+            ((Button)findViewById(R.id.button5)).setText("Finish");
+        }
+
         next3.putExtra("total",intent.getIntExtra("total",0)+1);
 
         next3.putExtra("type",intent.getStringExtra("type"));
