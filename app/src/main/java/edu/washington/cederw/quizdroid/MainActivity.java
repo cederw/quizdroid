@@ -21,7 +21,23 @@ public class MainActivity extends ActionBarActivity {
         math.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                next.putExtra("topic","Math is like numbers and things that look like funny letters.");
+                startActivity(next);
+            }
+        });
+        final Button phyB = (Button) findViewById(R.id.button2);
+        phyB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                next.putExtra("topic","Physics: math but harder");
+                startActivity(next);
+            }
+        });
+        final Button heroB = (Button) findViewById(R.id.button3);
+        heroB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                next.putExtra("topic","Marvel Super Hero's, I don't know anything about them :^)");
                 startActivity(next);
             }
         });

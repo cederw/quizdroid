@@ -20,6 +20,16 @@
             android:name=".topicOverview"
             android:label="@string/title_activity_topic_overview" >
         </activity>
+
+
+        <activity
+            android:name=".question"
+            android:label="@string/title_activity_math_q1" >
+        </activity>
+        <activity
+            android:name=".answer"
+            android:label="@string/title_activity_math_a1" >
+        </activity>
     </application>
 
 </manifest>
