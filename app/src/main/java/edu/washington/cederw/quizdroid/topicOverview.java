@@ -1,5 +1,8 @@
 package edu.washington.cederw.quizdroid;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,35 +13,25 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class topicOverview extends ActionBarActivity {
+public class topicOverview extends ActionBarActivity implements pickATopic.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_overview);
         Intent intent = getIntent();
-        ((TextView)findViewById(R.id.topic)).setText(intent.getStringExtra("topic"));
-        final Intent next2 = new Intent(this, question.class);
-        final Button start = (Button) findViewById(R.id.button4);
-         String type = "";
-        if(intent.getStringExtra("topic").equals("Math is like numbers and things that look like funny letters.")){
-            type = "math";
-        }
-        else if(intent.getStringExtra("topic").equals("Physics: math but harder")){
-            type = "physics";
-        } else {
-            type="hero";
-        }
-        next2.putExtra("total",0);
-        next2.putExtra("correct",0);
-        next2.putExtra("type",type);
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        String t = intent.getStringExtra("topic");
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment pickedTopic = new pickATopic();
+        pickedTopic.setArguments(intent.getExtras());
 
-                startActivity(next2);
-            }
-        });
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.mainLayout, pickedTopic);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+
+
     }
 
 
@@ -62,5 +55,9 @@ public class topicOverview extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onFragmentInteraction(Button button){
+
     }
 }
