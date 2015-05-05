@@ -29,6 +29,7 @@ public class pickATopic extends Fragment {
 
     // TODO: Rename and change types of parameters
     private static String topicText;
+    private Activity hostActivity;
 
     private OnFragmentInteractionListener mListener;
 
@@ -98,6 +99,31 @@ public class pickATopic extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         ((TextView) getView().findViewById(R.id.meme)).setText(topicText);
+        //final Intent next2 = new Intent(this, question.class);
+        final Button start = (Button) getView().findViewById(R.id.Begin);
+        String type = "";
+        if(topicText.equals("Math is like numbers and things that look like funny letters.")){
+            type = "math";
+        }
+        else if(topicText.equals("Physics: math but harder")){
+            type = "physics";
+        } else {
+            type="hero";
+        }
+      //  next2.putExtra("total",0);
+       // next2.putExtra("correct",0);
+      //  next2.putExtra("type",type);
+        final String ty = type;
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hostActivity instanceof topicOverview) {
+
+                    ((topicOverview) hostActivity).loadQFrag(0,0,ty);
+                }
+       //         startActivity(next2);
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -110,6 +136,7 @@ public class pickATopic extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        this.hostActivity = activity;
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {

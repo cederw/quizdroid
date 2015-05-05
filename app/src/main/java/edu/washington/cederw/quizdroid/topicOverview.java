@@ -34,6 +34,33 @@ public class topicOverview extends ActionBarActivity implements pickATopic.OnFra
 
     }
 
+    public void loadQFrag(int total, int correct, String type){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Bundle topicBundle = new Bundle();
+        topicBundle.putInt("total", total);
+        topicBundle.putInt("correct", correct);
+        topicBundle.putString("topic", type);
+        questionFragment qFragment = new questionFragment();
+        qFragment.setArguments(topicBundle);
+        ft.replace(R.id.mainLayout, qFragment); // where , what
+        ft.commit();
+    }
+    public void loadAFrag(int total, int correct, String type, String corr, String wrong){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Bundle topicBundle = new Bundle();
+        topicBundle.putInt("total", total);
+        topicBundle.putInt("correct", correct);
+        topicBundle.putString("topic", type);
+        topicBundle.putString("corr", corr);
+        topicBundle.putString("wrong", wrong);
+        answerFragment aFragment = new answerFragment();
+        aFragment.setArguments(topicBundle);
+        ft.replace(R.id.mainLayout, aFragment); // where , what
+        ft.commit();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,4 +87,5 @@ public class topicOverview extends ActionBarActivity implements pickATopic.OnFra
     public void onFragmentInteraction(Button button){
 
     }
+
 }
