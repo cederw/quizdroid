@@ -16,6 +16,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        QuizDroid qd = (QuizDroid) getApplication();
+        qd.questions.get("blah blah idk"); // grab your repository from MyApp and get data from it
+
+
         final Intent next = new Intent(this, topicOverview.class);
         final Button math = (Button) findViewById(R.id.button);
         math.setOnClickListener(new View.OnClickListener() {
