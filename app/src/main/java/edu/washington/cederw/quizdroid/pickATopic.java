@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +59,8 @@ public class pickATopic extends Fragment {
         super.onCreate(savedInstanceState);
         topicText = "dankmeme.website";
         if (getArguments() != null) {
-           topicText = getArguments().getString("topic");
+            List<topic> temp = ((topicOverview) hostActivity).getTopics();
+           topicText = temp.get(getArguments().getInt("topic")).getDesc();
            //mParam2 = getArguments().getString(ARG_PARAM2);
             Log.i("TopicFrag", "Awkward");
         }
@@ -101,19 +104,11 @@ public class pickATopic extends Fragment {
         ((TextView) getView().findViewById(R.id.meme)).setText(topicText);
         //final Intent next2 = new Intent(this, question.class);
         final Button start = (Button) getView().findViewById(R.id.Begin);
-        String type = "";
-        if(topicText.equals("Math is like numbers and things that look like funny letters.")){
-            type = "math";
-        }
-        else if(topicText.equals("Physics: math but harder")){
-            type = "physics";
-        } else {
-            type="hero";
-        }
+
       //  next2.putExtra("total",0);
        // next2.putExtra("correct",0);
       //  next2.putExtra("type",type);
-        final String ty = type;
+        final int ty = getArguments().getInt("topic");
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

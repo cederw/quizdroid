@@ -12,15 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 
 public class topicOverview extends ActionBarActivity implements pickATopic.OnFragmentInteractionListener{
+    public QuizDroid qd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_overview);
         Intent intent = getIntent();
-        String t = intent.getStringExtra("topic");
+        qd = (QuizDroid) getApplication();
         FragmentManager fragmentManager = getFragmentManager();
         Fragment pickedTopic = new pickATopic();
         pickedTopic.setArguments(intent.getExtras());
@@ -34,31 +37,36 @@ public class topicOverview extends ActionBarActivity implements pickATopic.OnFra
 
     }
 
-    public void loadQFrag(int total, int correct, String type){
+    public void loadQFrag(int total, int correct, int type){
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Bundle topicBundle = new Bundle();
         topicBundle.putInt("total", total);
         topicBundle.putInt("correct", correct);
-        topicBundle.putString("topic", type);
+        topicBundle.putInt("topic", type);
         questionFragment qFragment = new questionFragment();
         qFragment.setArguments(topicBundle);
         ft.replace(R.id.mainLayout, qFragment); // where , what
         ft.commit();
     }
-    public void loadAFrag(int total, int correct, String type, String corr, String wrong){
+    public void loadAFrag(int total, int correct, int type, String corr, String wrong){
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Bundle topicBundle = new Bundle();
         topicBundle.putInt("total", total);
         topicBundle.putInt("correct", correct);
-        topicBundle.putString("topic", type);
+        topicBundle.putInt("topic", type);
         topicBundle.putString("corr", corr);
         topicBundle.putString("wrong", wrong);
         answerFragment aFragment = new answerFragment();
         aFragment.setArguments(topicBundle);
         ft.replace(R.id.mainLayout, aFragment); // where , what
         ft.commit();
+    }
+
+    //my best method, it gives the data to the fragments
+    public List getTopics(){
+        return qd.topics;
     }
 
 

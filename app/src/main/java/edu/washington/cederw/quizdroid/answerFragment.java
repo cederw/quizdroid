@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +36,7 @@ public class answerFragment extends Fragment {
     private  String corr;
     private  String wrong;
     private Activity hostActivity;
+    public topic tempTopic;
 
     private OnFragmentInteractionListener mListener;
 
@@ -61,7 +64,9 @@ public class answerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         topicText = "dankmeme.website";
         if (getArguments() != null) {
-            topicText = getArguments().getString("topic");
+            List<topic> temp = ((topicOverview) hostActivity).getTopics();
+            tempTopic = temp.get(getArguments().getInt("topic"));
+            topicText = tempTopic.getDesc();
             total = getArguments().getInt("total");
             correct = getArguments().getInt("correct");
             corr = getArguments().getString("corr");
@@ -86,11 +91,11 @@ public class answerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final Intent next5 = new Intent(hostActivity, MainActivity.class);
 
-
+        //display stuffs
         ((TextView)getView().findViewById(R.id.textView)).setText("You answered: "+wrong);
         ((TextView)getView().findViewById(R.id.textView2)).setText("Correct answer: "+corr);
         ((TextView)getView().findViewById(R.id.textView5)).setText("You have answered "+correct+" out of "+total+ " correct");
-        if(total==4){
+        if(tempTopic.count() == total){
             final Button heroB = (Button) getView().findViewById(R.id.button7);
             heroB.setText("Finish");
             heroB.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +112,7 @@ public class answerFragment extends Fragment {
                 public void onClick(View v) {
                     if (hostActivity instanceof topicOverview) {
 
-                        ((topicOverview) hostActivity).loadQFrag(total,correct,topicText);
+                        ((topicOverview) hostActivity).loadQFrag(total,correct,getArguments().getInt("topic"));
                     }
                 }
             });

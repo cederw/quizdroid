@@ -12,37 +12,46 @@ import android.widget.Button;
 
 public class MainActivity extends ActionBarActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         QuizDroid qd = (QuizDroid) getApplication();
-        qd.questions.get("blah blah idk"); // grab your repository from MyApp and get data from it
+        /*
+        Get the buttons, add text and pictures to them
 
+         */
 
         final Intent next = new Intent(this, topicOverview.class);
         final Button math = (Button) findViewById(R.id.button);
+        math.setText(qd.topics.get(0).getTitle()+" - "+qd.topics.get(0).getDesc());
+        math.setCompoundDrawablesWithIntrinsicBounds(qd.topics.get(0).draw(),0,0,0);
         math.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                next.putExtra("topic","Math is like numbers and things that look like funny letters.");
+                next.putExtra("topic", 0);
                 startActivity(next);
             }
         });
         final Button phyB = (Button) findViewById(R.id.button2);
+        phyB.setText(qd.topics.get(1).getTitle()+" - "+qd.topics.get(1).getDesc());
+        phyB.setCompoundDrawablesWithIntrinsicBounds(qd.topics.get(1).draw(),0,0,0);
         phyB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                next.putExtra("topic","Physics: math but harder");
+                next.putExtra("topic",1);
                 startActivity(next);
             }
         });
         final Button heroB = (Button) findViewById(R.id.button3);
+        heroB.setText(qd.topics.get(2).getTitle()+" - "+qd.topics.get(2).getDesc());
+        heroB.setCompoundDrawablesWithIntrinsicBounds(qd.topics.get(2).draw(),0,0,0);
         heroB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                next.putExtra("topic","Marvel Super Hero's, I don't know anything about them :^)");
+                next.putExtra("topic",2);
                 startActivity(next);
             }
         });

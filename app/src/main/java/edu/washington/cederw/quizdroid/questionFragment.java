@@ -15,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +37,7 @@ public class questionFragment extends Fragment {
     private  int total;
     private  int correctQ;
     private Activity hostActivity;
+    public topic tempTopic;
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,7 +65,9 @@ public class questionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         topicText = "dankmeme.website";
         if (getArguments() != null) {
-            topicText = getArguments().getString("topic");
+            List<topic> temp = ((topicOverview) hostActivity).getTopics();
+            tempTopic = temp.get(getArguments().getInt("topic"));
+            topicText = tempTopic.getDesc();
             total = getArguments().getInt("total");
             correctQ = getArguments().getInt("correct");
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -81,138 +86,28 @@ public class questionFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        if(total==3){
+        if(tempTopic.count() == total+1){
             ((Button)getView().findViewById(R.id.button4)).setText("Finish");
         }
 
-
-        String question = "";
-        String one = "";
-        String two = "";
-        String three = "";
-        String four = "";
-        int correct = 0;
-        if(topicText.equals("math")){
-            if(total==0){
-                question = "What is 1/1/1/1/1/1/1/1";
-                one = "1";
-                two = "-1";
-                three = "5";
-                four = "7";
-                correct = 1;
-            } else if(total==1){
-                question = "What is 1+1";
-                one = "1";
-                two = "-1";
-                three = "2";
-                four = "7";
-                correct = 3;
-            } else if(total==2){
-                question = "What is 30-30";
-                one = "1";
-                two = "-1";
-                three = "5";
-                four = "0";
-                correct = 4;
-            } else if(total==3){
-                question = "What is 1*6";
-                one = "1";
-                two = "6";
-                three = "5";
-                four = "7";
-                correct = 2;
-            } else if(total==4){
-                question = "What is 100+1";
-                one = "1";
-                two = "-1";
-                three = "101";
-                four = "7";
-                correct = 3;
-            }
-        } else if(topicText.equals("physics")){
-            if(total==0){
-                question = "What is the speed of a car going 60 mph";
-                one = "1kph";
-                two = "60mph";
-                three = "5mph";
-                four = "7mph";
-                correct = 2;
-            } else if(total==1){
-                question = "Where is the Sun";
-                one = "The sky";
-                two = "The Ground";
-                three = "In this phone";
-                four = "It doesn't exist";
-                correct = 1;
-            } else if(total==2){
-                question = "What the velocity of Earth at 0 degrees Kelvin";
-                one = "7kph";
-                two = "-1kph";
-                three = "5kph";
-                four = "0kph";
-                correct = 4;
-            } else if(total==3){
-                question = "Who is a smart guy";
-                one = "Albert Einstein";
-                two = "Alberto Einstein";
-                three = "Halbert Einstein";
-                four = "Albert Minestein";
-                correct = 1;
-            } else if(total==4){
-                question = "What is matter";
-                one = "dank memes";
-                two = "smoke";
-                three = "Not anti-matter";
-                four = "stuff?";
-                correct = 3;
-            }
-        } else if(topicText.equals("hero")){
-            if(total==0){
-                question = "What is Captain America's civilian identity?";
-                one = "Steve Rogers";
-                two = "Dave";
-                three = "John";
-                four = "Sean";
-                correct = 1;
-            } else if(total==1){
-                question = "Who is Peter Parker's first love?";
-                one = "Obama";
-                two = "McCain";
-                three = "Gwen Stacy";
-                four = "Palin";
-                correct = 3;
-            } else if(total==2){
-                question = "Where does the Captain come from";
-                one = "Space";
-                two = "Also Space";
-                three = "Earth";
-                four = "America";
-                correct = 4;
-            } else if(total==3){
-                question = "Who is Marvel";
-                one = "Superman";
-                two = "Not DC";
-                three = "Batman";
-                four = "Mario";
-                correct = 2;
-            } else if(total==4){
-                question = "Is Link a Marvel superhero?";
-                one = "Yeahhhhh";
-                two = "Yessssss";
-                three = "No";
-                four = "Yes";
-                correct = 3;
-            }
-        }
+        //get and display the data
+        String question = tempTopic.getQuestion(total);
+        String one = tempTopic.getAnswer1(total);
+        String two = tempTopic.getAnswer2(total);
+        String three = tempTopic.getAnswer3(total);
+        String four = tempTopic.getAnswer4(total);
+        int correct = tempTopic.getCorrect(total);
 
 
-        total++;
-        View v = getView();
+
+        total++; //i guess i increase the total here
         ((TextView)getView().findViewById(R.id.tq)).setText(question);
         ((RadioButton)getView().findViewById(R.id.radioButton5)).setText(one);
         ((RadioButton)getView().findViewById(R.id.radioButton6)).setText(two);
         ((RadioButton)getView().findViewById(R.id.radioButton7)).setText(three);
         ((RadioButton)getView().findViewById(R.id.radioButton8)).setText(four);
+
+        //lots of final strings to be used in the onclick handler
         final String o = one;
         final String t = two;
         final String th = three;
@@ -220,8 +115,12 @@ public class questionFragment extends Fragment {
         final int cor = correct;
         final int tot = total;
 
-        final String top = topicText;
+        final int top = getArguments().getInt("topic");
 
+        /*
+        This is a comment, but really its just a warning, this code is bad
+        I just check every case and go from the current case.
+         */
         final Button submit = (Button) getView().findViewById(R.id.button4);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
