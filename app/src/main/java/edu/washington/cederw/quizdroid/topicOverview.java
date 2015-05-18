@@ -84,6 +84,10 @@ public class topicOverview extends ActionBarActivity implements pickATopic.OnFra
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.preferences) {
+            Intent intent = new Intent(this, Preferences.class);
+            startActivity(intent);
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
