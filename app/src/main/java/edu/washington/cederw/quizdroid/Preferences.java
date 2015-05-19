@@ -34,6 +34,9 @@ public class Preferences extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
         control = (Button)findViewById(R.id.button8);
+        QuizDroid qd = (QuizDroid) getApplication();
+        ((EditText)findViewById(R.id.editText)).setText(qd.prefUrl);
+        ((EditText)findViewById(R.id.editText2)).setText(qd.time.toString());
         Log.i("msg","does this even load");
         control.setOnClickListener(new View.OnClickListener() {
             @Override

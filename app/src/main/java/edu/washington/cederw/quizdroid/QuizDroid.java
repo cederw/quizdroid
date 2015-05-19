@@ -24,6 +24,8 @@ public class QuizDroid extends Application{
     public List<topic> topics;
     private static AlarmManager alarmMgr;
     private static PendingIntent alarmIntent;
+    public static String prefUrl;
+    public static Long time;
 
     public QuizDroid() {
         if (instance == null) {
@@ -80,12 +82,13 @@ public class QuizDroid extends Application{
 
     public void makeIntent(String url, String num){
         Log.i("msg","?");
-        Long time = Long.decode(num);
+        prefUrl = url;
+        time = Long.decode(num);
         if(time <=0){
             throw new IllegalArgumentException("Negative number or 0 entered");
         }
         Intent intent = new Intent(instance, getQuestions.class);
-        intent.putExtra("url",url);
+        intent.putExtra("url",prefUrl);
         alarmMgr = (AlarmManager)instance.getSystemService(Context.ALARM_SERVICE);
         if (alarmIntent != null) {
             // Now cancel the alarm that matches the old PendingIntent
