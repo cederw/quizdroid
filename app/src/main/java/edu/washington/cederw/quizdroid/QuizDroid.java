@@ -1,8 +1,13 @@
 package edu.washington.cederw.quizdroid;
 
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.EditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +22,8 @@ import java.util.List;
 public class QuizDroid extends Application{
     private static QuizDroid instance; // singleton
     public List<topic> topics;
+    private static AlarmManager alarmMgr;
+    private static PendingIntent alarmIntent;
 
     public QuizDroid() {
         if (instance == null) {
@@ -69,6 +76,27 @@ public class QuizDroid extends Application{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void makeIntent(String url, String num){
+        Log.i("msg","?");
+        Long time = Long.decode(num);
+        if(time <=0){
+            throw new IllegalArgumentException("Negative number or 0 entered");
+        }
+        Intent intent = new Intent(instance, getQuestions.class);
+        intent.putExtra("url",url);
+        alarmMgr = (AlarmManager)instance.getSystemService(Context.ALARM_SERVICE);
+        if (alarmIntent != null) {
+            // Now cancel the alarm that matches the old PendingIntent
+            alarmMgr.cancel(alarmIntent);
+        }
+        alarmIntent = PendingIntent.getBroadcast(instance, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                1000,
+                time*60000, alarmIntent);
+
     }
 
     public String readJSONFile(InputStream inputStream) throws IOException {

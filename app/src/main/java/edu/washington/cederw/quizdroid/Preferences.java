@@ -38,25 +38,29 @@ public class Preferences extends ActionBarActivity {
         control.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                QuizDroid qd = (QuizDroid) getApplication();
+                qd.makeIntent(((EditText)findViewById(R.id.editText)).getText().toString(),((EditText)findViewById(R.id.editText2)).getText().toString());
+            }
 //check that everything is filled out
-                        Log.i("msg","?");
-                        Long time = Long.decode(((EditText)findViewById(R.id.editText2)).getText().toString());
-                        if(time <=0){
-                            throw new IllegalArgumentException("Negative number or 0 entered");
-                        }
-                        Intent intent = new Intent(instance, getQuestions.class);
-                        intent.putExtra("url",((EditText)findViewById(R.id.editText)).getText().toString());
-                        Log.i("msg", ((EditText) findViewById(R.id.editText)).getText().toString() + Long.decode(((EditText) findViewById(R.id.editText2)).getText().toString()));
-                        alarmMgr = (AlarmManager)instance.getSystemService(Context.ALARM_SERVICE);
-                        alarmIntent = PendingIntent.getBroadcast(instance, 0, intent, 0);
-                     //   if (alarmIntent != null) {
-                    //        // Now cancel the alarm that matches the old PendingIntent
-                    //        alarmMgr.cancel(alarmIntent);
-                    //    }
-                        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                                1000,
-                                time*60000, alarmIntent);
-                    }
+//                        Log.i("msg","?");
+//                        Long time = Long.decode(((EditText)findViewById(R.id.editText2)).getText().toString());
+//                        if(time <=0){
+//                            throw new IllegalArgumentException("Negative number or 0 entered");
+//                        }
+//                        Intent intent = new Intent(instance, getQuestions.class);
+//                        intent.putExtra("url",((EditText)findViewById(R.id.editText)).getText().toString());
+//                        Log.i("msg", ((EditText) findViewById(R.id.editText)).getText().toString() + Long.decode(((EditText) findViewById(R.id.editText2)).getText().toString()));
+//                        alarmMgr = (AlarmManager)instance.getSystemService(Context.ALARM_SERVICE);
+//                if (alarmIntent != null) {
+//                    // Now cancel the alarm that matches the old PendingIntent
+//                    alarmMgr.cancel(alarmIntent);
+//                }
+//                        alarmIntent = PendingIntent.getBroadcast(instance, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                                1000,
+//                                time*60000, alarmIntent);
+//                    }
 
 
         });
