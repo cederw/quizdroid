@@ -24,6 +24,7 @@ public class QuizDroid extends Application{
     public List<topic> topics;
     private static AlarmManager alarmMgr;
     private static PendingIntent alarmIntent;
+    //What is "security"
     public static String prefUrl;
     public static Long time;
 
@@ -79,7 +80,7 @@ public class QuizDroid extends Application{
             e.printStackTrace();
         }
     }
-
+    //method can be called from anywhere to set a new url to check
     public void makeIntent(String url, String num){
         Log.i("msg","?");
         prefUrl = url;
