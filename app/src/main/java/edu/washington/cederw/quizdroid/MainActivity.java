@@ -19,7 +19,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         QuizDroid qd = (QuizDroid) getApplication();
-        qd.makeIntent("dankmeme.website","1");
+        qd.makeIntent("http://www.dankmeme.website","1");
         /*
         Get the buttons, add text and pictures to them
 
