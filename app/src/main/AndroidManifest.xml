@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".QuizDroid"
@@ -42,6 +43,16 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+        <receiver
+            android:name=".downLoadReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+
+        <activity
+            android:name=".Choice"
+            android:label="@string/title_activity_choice" >
+        </activity>
     </application>
 
 </manifest>
